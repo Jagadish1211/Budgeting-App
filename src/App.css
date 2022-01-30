@@ -1,32 +1,32 @@
-body{
-    font-family: 'Montserrat', sans-serif;
-    background-color: #FFFAFA;
-    padding: 0;
-    margin: 0;
+body {
+  font-family: "Montserrat", sans-serif;
+  background-color: #fffafa;
+  padding: 0;
+  margin: 0;
 }
 
 .Add-categoryButton {
-    display: flex;
-    justify-content: flex-end;
+  display: flex;
+  justify-content: flex-end;
 }
 
-.budgetcard{
-    margin-top:1rem;
+.budgetcard {
+  margin-top: 1rem;
 }
 
-.BudgetCard-inside{
-    display: flex;
-    justify-content: space-between;
-    padding: 5px;
+.BudgetCard-inside {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
 }
 
-.progressbar{
-    margin: 25px;
+.progressbar {
+  margin: 25px;
 }
 
-.cardbuttons{
-    display: flex;
-    justify-content: flex-end;
-    gap: 5px;
-    padding:10px;
+.cardbuttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 5px;
+  padding: 10px;
 }
