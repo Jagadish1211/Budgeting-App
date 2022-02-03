@@ -1,22 +1,31 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import AppBar from "./Components/AppBar";
-import { Col, Container, Button, Modal, Form } from "react-bootstrap";
+import { Col, Container, Button } from "react-bootstrap";
 import BudgetCard from "./Components/BudgetCard";
-import React, { useState } from "react";
+import React, { useState, createContext, useEffect } from "react";
 import AddCategoryModal from "./Modals/AddCategoryModal";
 import AddExpensesModal from "./Modals/AddExpensesModal";
 
-function App() {
-  const default_categories = [
-    { name: "Food", max_spending: 100 ,expenses:{}},
-    { name: "Housing and Maintainence", max_spending: 100,expenses:{} },
-    { name: "Transport", max_spending: 100,expenses:{} },
-    { name: "Entertainment", max_spending: 100,expenses:{} },
-  ];
+//this context also handles expenses
+export const expenseModalContext = createContext()
 
+function App() {
+  
+  const default_categories = [
+    { name: "Food", max_spending: 100 ,expenses:[]},
+    { name: "Housing and Maintainence", max_spending: 100,expenses:[] },
+    { name: "Transport", max_spending: 100,expenses:[] },
+    { name: "Entertainment", max_spending: 100,expenses:[] },
+  ];
+  const [showAddExpenseModal, setShowAddExpenseModal] = useState(false);
   const [categories, setCategories] = useState(default_categories);
   const [showAddCategory, setShowAddCategory] = useState(false);
+  const [expenseDetails,setExpenseDetails] = useState({
+    expenseName:"",
+    expenseAmt:""
+      })
+  const [ID,setID] = useState()
   
   /*For adding the inputs from modal to the array of categories */
 
@@ -38,13 +47,31 @@ function App() {
     setShowAddCategory(false);
   }
 
-  var expenseaddstatus
-  function ExpenseAdditionModal(showAddExpenseModal,HideAddExpensesModal,expenseaddstatus) {
-     expenseaddstatus = showAddExpenseModal;
-    
+  function HideAddExpensesModal() {
+    setShowAddExpenseModal(false);
   }
 
+  /*Adding expenses to a particular category*/
+
+  function Addexpensetocategory(ID){
+    let existingcategories= [...categories]
+    existingcategories[ID].expenses.push(expenseDetails)
+    setCategories(existingcategories)
+  }
+
+  useEffect(()=>console.log(categories)
+  ,[categories])
+
+
   return (
+    <expenseModalContext.Provider value={{
+      getter:showAddExpenseModal,
+      setter:setShowAddExpenseModal,
+      modalhide:HideAddExpensesModal,
+      sendexpensedata:expenseDetails,
+      setexpensedata:setExpenseDetails,
+      valueofID: setID,
+      }}>
     <Container fluid="md">
       <row>
         <Col>
@@ -60,11 +87,10 @@ function App() {
         addCategory={AddCategory}
         showaddcategory={showAddCategory}
         handleclose={HandleClose}
-        sentvalues={AddNewCategorytoList}
+        sentvalues={AddNewCategorytoList}s
       />
-      <AddExpensesModal
-      showaddexpensemodal={expenseaddstatus}
-      //hideaddexpensesmodal ={}
+      <AddExpensesModal 
+      addexpense={Addexpensetocategory}
       />
       <div>
         {categories.map((category, index) => (
@@ -74,12 +100,13 @@ function App() {
               id = {index}
               categoryname={category.name}
               max_spending={category.max_spending}
-              sendexpensemodaldata = {ExpenseAdditionModal}
+              // sendexpensemodaldata = {ExpenseAdditionModal}
             />
           </div>
         ))}
       </div>
     </Container>
+    </expenseModalContext.Provider>
   );
 }
 

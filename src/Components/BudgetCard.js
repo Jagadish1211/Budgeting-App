@@ -1,25 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, {useContext } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Card, ProgressBar } from "react-bootstrap";
+import {expenseModalContext} from "../App";
 
 function BudgetCard(props) {
+ // const user = useContext(expenseModalContext)
+  const {setter,valueofID} = useContext(expenseModalContext)
   const progress = 50;
-  const [showAddExpenseModal, setShowAddExpenseModal] = useState(false);
-
-  function Addingexpensefunction() {
-    setShowAddExpenseModal(true);
-  }
-
-  function HideAddExpensesModal() {
-    setShowAddExpenseModal(false);
-  }
-
-  useEffect(()=>{
-    props.expensemodaldata(showAddExpenseModal,HideAddExpensesModal)
-  },[showAddExpenseModal])
-
   
-
+  function Addingexpensefunction() {
+    setter(true);
+    valueofID(props.id)
+  }
+ 
   return (
     <Card>
       <div className="BudgetCard-inside">
@@ -31,8 +24,7 @@ function BudgetCard(props) {
       </div>
       <div className="cardbuttons">
         <Button
-          onClick={Addingexpensefunction}
-          btnid={props.id}
+          onClick={()=>Addingexpensefunction(props.id)}
           variant="outline-secondary"
           size="sm"
         >
