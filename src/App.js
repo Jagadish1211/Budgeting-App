@@ -24,6 +24,7 @@ function App() {
   const [expenseName, setExpenseName] = useState();
   const [expenseAmt, setExpenseAmt] = useState();
   const [ID, setID] = useState();
+  const [expenseIDtoDel,setExpenseIDtoDel] = useState()
 
   /*For adding the inputs from modal to the array of categories */
 
@@ -53,7 +54,6 @@ function App() {
   /*Adding expenses to a particular category*/
 
   function Addexpensetocategory(ID) {
-    console.log(ID);
     let existingcategories = [...categories];
     existingcategories[ID].expenses.push({
       Expense: expenseName,
@@ -62,8 +62,15 @@ function App() {
     setCategories(existingcategories);
     HideAddExpensesModal();
   }
+  useEffect(()=>{setExpenseAmt();
+  setExpenseName()},[categories])
 
-  useEffect(() => console.log(categories), [categories]);
+  function Delexpense(expenseIDtoDel,ID){
+    let existingcategories = [...categories];
+    existingcategories[ID].expenses.pop(expenseIDtoDel);
+    setCategories(existingcategories);
+    console.log(existingcategories[ID].expenses)
+  }
 
   function DeleteCategory(itemindex) {
     let existingcategories = [...categories];
@@ -82,6 +89,9 @@ function App() {
         setExpenseAmt,
         setID,
         ID,
+        categories,
+        setExpenseIDtoDel,
+        Delexpense
       }}
     >
       <Container fluid="md">

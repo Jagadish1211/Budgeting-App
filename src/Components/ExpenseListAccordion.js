@@ -1,37 +1,23 @@
-import React from "react";
-import Accordion from "react-bootstrap/Accordion";
-import { useAccordionButton } from "react-bootstrap/AccordionButton";
-import { Button, Card } from "react-bootstrap";
+import React,{useContext} from "react";
+import Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import { AccordionSummary } from "@mui/material";
+import { expenseModalContext } from "../App.js";
+import Listitem from "./ExpenseTable.js";
 
-function CustomToggle({ children, eventKey }) {
-  const decoratedOnClick = useAccordionButton(eventKey, () =>
-    console.log("totally custom!")
-  );
+function ViewExpenseList(props) {
+  const {categories,setID} = useContext(expenseModalContext)
 
   return (
-    <Button
-      variant="outline-secondary"
-      size="sm"
-      onClick={decoratedOnClick}
-    >
-      {children}
-    </Button>
-  );
-}
-
-function ViewExpenseList() {
-  return (
-    <Accordion defaultActiveKey="0">
-      <Card>
-        {/* <Card.Header>
-          <CustomToggle eventKey="0">Click me!</CustomToggle>
-        </Card.Header> */}
-        <Accordion.Collapse eventKey="0">
-          <Card.Body>Hello! I'm the body</Card.Body>
-        </Accordion.Collapse>
-      </Card>
+    <Accordion expanded={props.status}>
+      <div className="AccordionSummary">
+        <AccordionSummary></AccordionSummary>
+      </div>
+      <AccordionDetails>                                                                
+      {categories[props.key_id].expenses?categories[props.key_id].expenses.map((e,index)=><Listitem key={index} categoryIDofExpense={props.key_id} id={index} name={e.Expense} amt={e.Amount} />):null}
+      </AccordionDetails>
     </Accordion>
   );
 }
 
-export {ViewExpenseList, CustomToggle};
+export { ViewExpenseList };

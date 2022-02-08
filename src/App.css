@@ -13,11 +13,12 @@ body {
 .budgetcard {
   margin-top: 1rem;
 }
-
+  
 .BudgetCard-inside {
   display: flex;
   justify-content: space-between;
-  padding: 5px;
+  padding: 25px 30px;
+  font-size: larger;
 }
 
 .progressbar {
@@ -27,8 +28,20 @@ body {
 .cardbuttons {
   display: flex;
   justify-content: flex-end;
-  gap: 5px;
-  padding: 10px;
+  gap: 10px;
+  padding: 20px;
+}
+
+.expenseAccordion{
+  border: 0;
+}
+
+.AccordionSummary{
+   height: 0px; 
 }
 
 
+.Listitem{
+  font-size: large;
+  font-weight: 700; 
+}
