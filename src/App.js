@@ -24,23 +24,29 @@ function App() {
   const [expenseName, setExpenseName] = useState();
   const [expenseAmt, setExpenseAmt] = useState();
   const [ID, setID] = useState();
-  const [expenseIDtoDel,setExpenseIDtoDel] = useState()
+  const [expenseIDtoDel, setExpenseIDtoDel] = useState();
+  const [newcategory, setNewcategory] = useState();
+  const [spendinglimit, setSpendinglimit] = useState();
+  const [EdittingCategory, setEdittingCategory] = useState(false);
+  const [EdittingIndex, setEdittingIndex] = useState();
 
   /*For adding the inputs from modal to the array of categories */
 
-  function AddNewCategorytoList(newcategory, spendinglimit) {
+  function AddNewCategorytoList() {
     let existingcategories = [...categories];
+    console.log(newcategory,spendinglimit)
     existingcategories.push({
       name: newcategory,
       max_spending: spendinglimit,
     });
     setCategories(existingcategories);
-    HandleClose()
+    HandleClose();
   }
 
   /*For showing up modal for adding categories of budget*/
   function AddCategory() {
     setShowAddCategory(true);
+    setEdittingCategory(false)
   }
 
   function HandleClose() {
@@ -62,21 +68,51 @@ function App() {
     setCategories(existingcategories);
     HideAddExpensesModal();
   }
-  useEffect(()=>{setExpenseAmt();
-  setExpenseName()},[categories])
+  useEffect(() => {
+    setExpenseAmt();
+    setExpenseName();
+  }, [categories]);
 
-  function Delexpense(expenseIDtoDel,ID){
+  function Delexpense(expenseIDtoDel, ID) {
     let existingcategories = [...categories];
     existingcategories[ID].expenses.pop(expenseIDtoDel);
     setCategories(existingcategories);
-    console.log(existingcategories[ID].expenses)
+    console.log(existingcategories[ID].expenses);
   }
+
+  // Deleting a category
 
   function DeleteCategory(itemindex) {
     let existingcategories = [...categories];
     console.log(itemindex);
-    setCategories(existingcategories.filter((cat,index) => itemindex !== index))
-    HandleClose()
+    setCategories(
+      existingcategories.filter((cat, index) => itemindex !== index)
+    );
+    HandleClose();
+  }
+
+  // Editting a Category
+
+  function EditCategory(itemindex) {
+    setShowAddCategory(true);
+    setNewcategory(categories[itemindex].name)
+    setSpendinglimit(categories[itemindex].max_spending)
+    console.log(newcategory,spendinglimit)
+    setEdittingCategory(true);
+    setEdittingIndex(itemindex);
+  }
+
+  function AddEdittedCategory() {
+    let existingcategories = [...categories];
+    let expenseList = existingcategories[EdittingIndex].expenses;
+    existingcategories.splice(EdittingIndex, 1,{
+      name: newcategory,
+      max_spending: spendinglimit,
+      expenses: expenseList,
+    });
+    setCategories(existingcategories);
+    HandleClose();
+    setEdittingCategory(false);
   }
 
   return (
@@ -91,7 +127,12 @@ function App() {
         ID,
         categories,
         setExpenseIDtoDel,
-        Delexpense
+        Delexpense,
+        setNewcategory,
+        setSpendinglimit,
+        EdittingCategory,
+        AddEdittedCategory,
+        AddNewCategorytoList
       }}
     >
       <Container fluid="md">
@@ -109,8 +150,7 @@ function App() {
           addCategory={AddCategory}
           showaddcategory={showAddCategory}
           handleclose={HandleClose}
-          sentvalues={AddNewCategorytoList}
-          s
+          sentvaluesToedit={AddEdittedCategory}
         />
         <AddExpensesModal addexpense={Addexpensetocategory} />
         <div>
@@ -122,7 +162,7 @@ function App() {
                 categoryname={category.name}
                 max_spending={category.max_spending}
                 delcategory={DeleteCategory}
-                // sendexpensemodaldata = {ExpenseAdditionModal}
+                editcategory={EditCategory}
               />
             </div>
           ))}
