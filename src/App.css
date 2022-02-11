@@ -45,3 +45,12 @@ body {
   font-size: large;
   font-weight: 700; 
 }
+
+
+.button-pointer{
+  cursor:pointer;
+}
+
+Button{
+  cursor:pointer;
+}

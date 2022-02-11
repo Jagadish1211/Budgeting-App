@@ -11,7 +11,7 @@ import Paper from "@mui/material/Paper";
 import { expenseModalContext } from "../App";
 
 function Listitem(props) {
-  const { setExpenseIDtoDel, setID, Delexpense, expenseIDtoDel, ID } =
+  const { setExpenseIDtoDel, setID, Delexpense, expenseIDtoDel, ID,Editexpense,EdittingExpense, setEdittingExpense,setter } =
     useContext(expenseModalContext);
 
   function SelectExpensetoDel() {
@@ -19,8 +19,15 @@ function Listitem(props) {
     setID(props.categoryIDofExpense);
     Delexpense(expenseIDtoDel, ID);
     console.log("clicked")
+    
   }
   
+  function SelectExpensetoEdit(){
+    setExpenseIDtoDel(props.index)
+    setID(props.categoryIDofExpense)
+    setEdittingExpense(true)
+    setter(true);
+  }
 
   return (
     <div>
@@ -55,12 +62,12 @@ function Listitem(props) {
               </TableCell>
               <TableCell align="center">{props.amt}</TableCell>
               <TableCell align="center">
-                <div onClick={SelectExpensetoDel}>
+                <div className="button-pointer" onClick={SelectExpensetoDel}>
                   <DeleteOutlineIcon />
                 </div>
               </TableCell>
               <TableCell align="center">
-                <div>
+                <div className="button-pointer" onClick={SelectExpensetoEdit}>
                   <EditIcon />
                 </div>
               </TableCell>

@@ -29,12 +29,13 @@ function App() {
   const [spendinglimit, setSpendinglimit] = useState();
   const [EdittingCategory, setEdittingCategory] = useState(false);
   const [EdittingIndex, setEdittingIndex] = useState();
+  const [EdittingExpense, setEdittingExpense] = useState(false);
 
   /*For adding the inputs from modal to the array of categories */
 
   function AddNewCategorytoList() {
     let existingcategories = [...categories];
-    console.log(newcategory,spendinglimit)
+    console.log(newcategory, spendinglimit);
     existingcategories.push({
       name: newcategory,
       max_spending: spendinglimit,
@@ -46,7 +47,7 @@ function App() {
   /*For showing up modal for adding categories of budget*/
   function AddCategory() {
     setShowAddCategory(true);
-    setEdittingCategory(false)
+    setEdittingCategory(false);
   }
 
   function HandleClose() {
@@ -95,9 +96,9 @@ function App() {
 
   function EditCategory(itemindex) {
     setShowAddCategory(true);
-    setNewcategory(categories[itemindex].name)
-    setSpendinglimit(categories[itemindex].max_spending)
-    console.log(newcategory,spendinglimit)
+    setNewcategory(categories[itemindex].name);
+    setSpendinglimit(categories[itemindex].max_spending);
+    console.log(newcategory, spendinglimit);
     setEdittingCategory(true);
     setEdittingIndex(itemindex);
   }
@@ -105,7 +106,7 @@ function App() {
   function AddEdittedCategory() {
     let existingcategories = [...categories];
     let expenseList = existingcategories[EdittingIndex].expenses;
-    existingcategories.splice(EdittingIndex, 1,{
+    existingcategories.splice(EdittingIndex, 1, {
       name: newcategory,
       max_spending: spendinglimit,
       expenses: expenseList,
@@ -113,6 +114,18 @@ function App() {
     setCategories(existingcategories);
     HandleClose();
     setEdittingCategory(false);
+  }
+  // editting expense in a category
+  function Editexpense() {
+    
+    let existingcategories = [...categories];
+    existingcategories[ID].expenses.splice(expenseIDtoDel, 1, {
+      Expense: expenseName,
+      Amount: expenseAmt,
+    });
+    setCategories(existingcategories);
+    setEdittingExpense(false);
+    setShowAddExpenseModal(false)
   }
 
   return (
@@ -132,7 +145,11 @@ function App() {
         setSpendinglimit,
         EdittingCategory,
         AddEdittedCategory,
-        AddNewCategorytoList
+        AddNewCategorytoList,
+        Editexpense,
+        EdittingExpense,
+        setEdittingExpense,
+        Editexpense
       }}
     >
       <Container fluid="md">

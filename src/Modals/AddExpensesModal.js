@@ -3,8 +3,15 @@ import { Button, Form, Modal } from "react-bootstrap";
 import { expenseModalContext } from "../App";
 
 function AddExpensesModal(props) {
-  const { getter, modalhide, setExpenseName, setExpenseAmt, ID } =
-    useContext(expenseModalContext);
+  const {
+    getter,
+    modalhide,
+    setExpenseName,
+    setExpenseAmt,
+    ID,
+    EdittingExpense,
+    Editexpense,
+  } = useContext(expenseModalContext);
 
   function Expensedesc(Event) {
     setExpenseName(Event.target.value);
@@ -17,7 +24,7 @@ function AddExpensesModal(props) {
     <div className="modalexs">
       <Modal show={getter} onHide={modalhide}>
         <Modal.Header closeButton>
-          <Modal.Title>New Expense</Modal.Title>
+          <Modal.Title>{EdittingExpense ? "Edit Expense" : "New Expense"}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -38,7 +45,11 @@ function AddExpensesModal(props) {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={() => props.addexpense(ID)}>Add</Button>
+          <Button
+            onClick={EdittingExpense ? Editexpense : () => props.addexpense(ID)}
+          >
+            {EdittingExpense ? "Edit" : "Add"}
+          </Button>
         </Modal.Footer>
       </Modal>
     </div>
