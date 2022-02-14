@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { Modal, Form, Button } from "react-bootstrap";
 import { expenseModalContext } from "../App.js";
 

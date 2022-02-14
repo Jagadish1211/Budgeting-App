@@ -6,7 +6,6 @@ import BudgetCard from "./Components/BudgetCard";
 import React, { useState, createContext, useEffect } from "react";
 import AddCategoryModal from "./Modals/AddCategoryModal";
 import AddExpensesModal from "./Modals/AddExpensesModal";
-import ViewExpenseList from "./Components/ExpenseListAccordion";
 
 //this context also handles expenses
 export const expenseModalContext = createContext();
@@ -39,6 +38,7 @@ function App() {
     existingcategories.push({
       name: newcategory,
       max_spending: spendinglimit,
+      expenses: []
     });
     setCategories(existingcategories);
     HandleClose();
@@ -149,7 +149,6 @@ function App() {
         Editexpense,
         EdittingExpense,
         setEdittingExpense,
-        Editexpense
       }}
     >
       <Container fluid="md">

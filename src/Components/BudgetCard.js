@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Card, ProgressBar } from "react-bootstrap";
 import { expenseModalContext } from "../App";

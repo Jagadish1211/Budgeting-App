@@ -11,7 +11,7 @@ import Paper from "@mui/material/Paper";
 import { expenseModalContext } from "../App";
 
 function Listitem(props) {
-  const { setExpenseIDtoDel, setID, Delexpense, expenseIDtoDel, ID,Editexpense,EdittingExpense, setEdittingExpense,setter } =
+  const { setExpenseIDtoDel, setID, Delexpense, expenseIDtoDel, ID, setEdittingExpense,setter } =
     useContext(expenseModalContext);
 
   function SelectExpensetoDel() {
