@@ -9,7 +9,11 @@ body {
   display: flex;
   justify-content: flex-end;
 }
-
+.center{
+  display: flex;
+  justify-content: center;
+  margin:10em;
+}
 .budgetcard {
   margin-top: 1rem;
 }

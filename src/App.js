@@ -11,12 +11,7 @@ import AddExpensesModal from "./Modals/AddExpensesModal";
 export const expenseModalContext = createContext();
 
 function App() {
-  const default_categories = [
-    { name: "Food", max_spending: 100, expenses: [] },
-    { name: "Housing and Maintainence", max_spending: 100, expenses: [] },
-    { name: "Transport", max_spending: 100, expenses: [] },
-    { name: "Entertainment", max_spending: 100, expenses: [] },
-  ];
+  const default_categories = [];
   const [showAddExpenseModal, setShowAddExpenseModal] = useState(false);
   const [categories, setCategories] = useState(default_categories);
   const [showAddCategory, setShowAddCategory] = useState(false);
@@ -162,6 +157,7 @@ function App() {
             Add Category
           </Button>
         </div>
+        {categories.length===0?<div className="center">Please Add your categories</div>:null}
         <AddCategoryModal
           addCategory={AddCategory}
           showaddcategory={showAddCategory}
